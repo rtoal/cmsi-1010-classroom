@@ -1,3 +1,8 @@
+"""A simple generator of Mondrian-style colored rectangles.
+Based on an original JavaScript implementation by Max Halford
+at https://maxhalford.github.io/blog/mondrian/)
+"""
+
 import pygame
 import random
 import sys
@@ -23,13 +28,15 @@ y_pad = int(HEIGHT * 0.05)
 LINE_WIDTH = 5
 
 
-def draw_and_split(rect, depth, limit):
+def draw_and_split(rect, depth):
     pygame.draw.rect(screen, random.choice(COLORS), rect)
     pygame.draw.rect(screen, (0, 0, 0), rect, LINE_WIDTH)
 
-    if depth == limit:
+    if depth == 0:
+        # We've gone as deep as we want to go
         return
     if rect.width < 2 * x_pad or rect.height < 2 * y_pad:
+        # Rectangle is too small to split
         return
 
     if rect.width > rect.height:
@@ -41,21 +48,18 @@ def draw_and_split(rect, depth, limit):
         r1 = pygame.Rect(rect.left, rect.top, rect.width, y - rect.top)
         r2 = pygame.Rect(rect.left, y, rect.width, rect.bottom - y)
 
-    draw_and_split(r1, depth + 1, limit)
-    draw_and_split(r2, depth + 1, limit)
+    draw_and_split(r1, depth - 1)
+    draw_and_split(r2, depth - 1)
 
 
 def draw_scene():
     screen.fill((255, 255, 255))  # clear screen
     outer_rectangle = pygame.Rect(0, 0, WIDTH, HEIGHT)
-    draw_and_split(outer_rectangle, 0, 5)
+    draw_and_split(outer_rectangle, 5)
     pygame.display.flip()
 
 
-# Draw the first scene
 draw_scene()
-
-# Main loop
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

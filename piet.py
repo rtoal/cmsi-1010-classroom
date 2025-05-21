@@ -2,13 +2,11 @@ import pygame
 import random
 import sys
 
-# Initialize PyGame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Recursive Rectangles")
+pygame.display.set_caption("Mondrain")
 
-# Colors (pygame uses RGB tuples)
 COLORS = [
     (255, 255, 255),  # white
     (255, 255, 255),
@@ -25,7 +23,7 @@ y_pad = int(HEIGHT * 0.05)
 LINE_WIDTH = 5
 
 
-def split_rect(rect, depth, limit):
+def draw_and_split(rect, depth, limit):
     pygame.draw.rect(screen, random.choice(COLORS), rect)
     pygame.draw.rect(screen, (0, 0, 0), rect, LINE_WIDTH)
 
@@ -43,14 +41,14 @@ def split_rect(rect, depth, limit):
         r1 = pygame.Rect(rect.left, rect.top, rect.width, y - rect.top)
         r2 = pygame.Rect(rect.left, y, rect.width, rect.bottom - y)
 
-    split_rect(r1, depth + 1, limit)
-    split_rect(r2, depth + 1, limit)
+    draw_and_split(r1, depth + 1, limit)
+    draw_and_split(r2, depth + 1, limit)
 
 
 def draw_scene():
     screen.fill((255, 255, 255))  # clear screen
-    initial = pygame.Rect(0, 0, WIDTH, HEIGHT)
-    split_rect(initial, 0, 5)
+    outer_rectangle = pygame.Rect(0, 0, WIDTH, HEIGHT)
+    draw_and_split(outer_rectangle, 0, 5)
     pygame.display.flip()
 
 

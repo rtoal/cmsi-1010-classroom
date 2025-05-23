@@ -9,17 +9,17 @@ words = {
     "color": ["pink", "blue", "mauve", "red", "transparent"]
 }
 
-tokens = [
-    "Yesterday", "the", "color", "noun",
-    "verb", "preposition", "the", "coach’s",
-    "adjective", "color", "noun", "that", "was",
-    "adverb", "adjective", "before"
-]
+template = """
+    Yesterday the color noun
+    verb preposition the coach’s
+    adjective color noun that was
+    adverb adjective before
+    """
 
 
 def random_sentence():
     sentence = []
-    for token in tokens:
+    for token in template.split():
         if token in words:
             sentence.append(random.choice(words[token]))
         else:

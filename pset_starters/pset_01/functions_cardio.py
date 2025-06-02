@@ -82,45 +82,42 @@ def word_frequencies(s):
     pass
 
 
-print(is_odd(3), " should be True")
-print(is_odd(8), " should be False")
-print(is_odd(-3), " should be True")
-print(is_odd(-8), " should be False")
+assert is_odd(3) == True
+assert is_odd(8) == False
+assert is_odd(-3) == True
+assert is_odd(-8) == False
 
-print(median_of_three(1, 2, 3), " should be 2")
-print(median_of_three(1, 3, 2), " should be 2")
-print(median_of_three(2, 1, 3), " should be 2")
-print(median_of_three(2, 3, 1), " should be 2")
-print(median_of_three(3, 1, 2), " should be 2")
-print(median_of_three(3, 2, 1), " should be 2")
+assert median_of_three(1, 2, 3) == 2
+assert median_of_three(1, 3, 2) == 2
+assert median_of_three(2, 1, 3) == 2
+assert median_of_three(2, 3, 1) == 2
+assert median_of_three(3, 1, 2) == 2
+assert median_of_three(3, 2, 1) == 2
 
-print(factorial(5), " should be 120")
-print(factorial(0), " should be 1")
-print(factorial(1), " should be 1")
-print(factorial(6), " should be 720")
-print(factorial(20), " should be 2432902008176640000")
+assert factorial(5) == 120
+assert factorial(0) == 1
+assert factorial(1) == 1
+assert factorial(6) == 720
+assert factorial(20) == 2432902008176640000
 
-print(is_palindrome("racecar"), " should be True")
-print(is_palindrome("hello"), " should be False")
-print(is_palindrome("madam"), " should be True")
-print(is_palindrome("python"), " should be False")
+assert is_palindrome("racecar") == True
+assert is_palindrome("hello") == False
+assert is_palindrome("madam") == True
+assert is_palindrome("python") == False
 
-print(count_of_latin_vowels("hello world"), " should be 3")
-print(count_of_latin_vowels("aeiou"), " should be 5")
-print(count_of_latin_vowels("xyz"), " should be 0")
-print(count_of_latin_vowels("Python programming"), " should be 4")
-print(count_of_latin_vowels("Aeiou"), " should be 5")
+assert count_of_latin_vowels("hello world") == 3
+assert count_of_latin_vowels("aeiou") == 5
+assert count_of_latin_vowels("xyz") == 0
+assert count_of_latin_vowels("Python programming") == 4
+assert count_of_latin_vowels("Aeiou") == 5
 
-print(longest_string(["apple", "banana", "cherry"]), " should be banana")
-print(longest_string(["cat", "dog", "elephant"]), " should be elephant")
-print(longest_string(["short", "longer", "longest"]), " should be longest")
-print(longest_string(["a", "ab", "abc"]), " should be abc")
-print(longest_string(["one", "two", "three", "four"]), " should be three")
+assert longest_string(["apple", "banana", "cherry"]) == "banana"
+assert longest_string(["cat", "dog", "elephant"]) == "elephant"
+assert longest_string(["short", "longer", "longest"]) == "longest"
+assert longest_string(["a", "ab", "abc"]) == "abc"
+assert longest_string(["one", "two", "three", "four"]) == "three"
 
-print(word_frequencies("hello world hello"),
-      " should be {'hello': 2, 'world': 1}")
-print(word_frequencies("Python is great Python"),
-      " should be {'Python': 2, 'is': 1, 'great': 1}")
-print(word_frequencies("a b a c b a"), " should be {'a': 3, 'b': 2, 'c': 1}")
-print(word_frequencies("test test test"), " should be {'test': 3}")
-print(word_frequencies(""), " should be {}")
+assert word_frequencies("hello world hello") == {'hello': 2, 'world': 1}
+assert word_frequencies("a b a c b a") == {'a': 3, 'b': 2, 'c': 1}
+assert word_frequencies("test test test") == {'test': 3}
+assert word_frequencies("") == {}

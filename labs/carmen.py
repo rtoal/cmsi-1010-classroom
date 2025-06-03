@@ -3,6 +3,9 @@ from geography import countries
 
 
 def random_country_name():
+    # Select a random country name from the key in the countries dictionary we imported.
+    # We have to convert the keys to a list, because random.choice() only works on lists,
+    # and the keys of a dictionary are (surprisingly!) not a list in Python.
     return random.choice(list(countries.keys()))
 
 

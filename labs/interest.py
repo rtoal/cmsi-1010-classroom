@@ -7,6 +7,18 @@ def investment_value(start, interest_rate, tax_rate, deposit, years):
     return balance
 
 
-print(
-    investment_value(
-        start=1000, interest_rate=0.13, tax_rate=0.25, deposit=1000, years=30))
+def years_to_reach_goal(start, interest_rate, tax_rate, deposit, goal):
+    years = 0
+    balance = start
+    while balance < goal:
+        interest_earned = balance * interest_rate
+        taxes = interest_earned * tax_rate
+        balance += (interest_earned - taxes + deposit)
+        years += 1
+    return years
+
+
+print(investment_value(1000, 0.05, 0, 0, 10))  # should be 1628.89
+print(investment_value(1000, 0.05, 0, 100, 10))  # should be 2886.68
+print(investment_value(10000, 0.13, 0.25, 1000, 30))  # should be 319883.75
+print(investment_value(1, 1, 0, 0, 20))  # should be 1048576.0

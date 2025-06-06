@@ -1,7 +1,7 @@
 countries = {
     "colombia": {
         "capital": "Bogotá",
-        "coordinates": (4.7110, -74.0721),  # latitude, longitude
+        "coordinates": (4.7110, -74.0721),
         "region": "South America",
         "landmarks": ["Monserrate", "El Peñón de Guatapé", "Las Lajas Sanctuary"],
     },

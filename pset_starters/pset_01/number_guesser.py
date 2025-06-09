@@ -4,8 +4,8 @@
 # The intent is to give you practice writing a complete, interactive
 # Python program.
 
-# Remove the comments in this file when you have completed your program.
-# You can, and should, include your own comments, but please remove the
+# Remove ALL of the existing comments in this file prior to submission.
+# You can, and should, add your own comments, but please remove all the
 # comments that are here now.
 # ----------------------------------------------------------------------
 

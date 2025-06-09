@@ -1,11 +1,26 @@
 # ----------------------------------------------------------------------
 # This is the file functions_cardio.py
-
+#
 # The intent is to give you practice writing functions.
-
+#
 # Complete the functions below.
-# Remove this comment when you have completed the functions.
+#
+# Each function has a docstring that describes what it should do, but
+# please see the unit tests at the bottom of the file for more
+# specific examples of what each function should return. To run
+# the tests, you can use the command
+#
+#     python3 -m unittest functions_cardio.py
+#
+# (or python depending on your system).
+#
+# Remove this comment, and all of the "replace the pass statement..."
+# comments, prior to submission. You can, and should, add your own
+# comments, but please remove all the comments that are here now.
 # ----------------------------------------------------------------------
+
+import unittest
+
 
 def is_odd(n):
     """
@@ -82,42 +97,61 @@ def word_frequencies(s):
     pass
 
 
-assert is_odd(3) == True
-assert is_odd(8) == False
-assert is_odd(-3) == True
-assert is_odd(-8) == False
+class TestFunctionsCardio(unittest.TestCase):
+    def test_is_odd(self):
+        self.assertTrue(is_odd(3))
+        self.assertFalse(is_odd(8))
+        self.assertTrue(is_odd(-3))
+        self.assertFalse(is_odd(-8))
 
-assert median_of_three(1, 2, 3) == 2
-assert median_of_three(1, 3, 2) == 2
-assert median_of_three(2, 1, 3) == 2
-assert median_of_three(2, 3, 1) == 2
-assert median_of_three(3, 1, 2) == 2
-assert median_of_three(3, 2, 1) == 2
+    def test_median_of_three(self):
+        self.assertEqual(median_of_three(1, 2, 3), 2)
+        self.assertEqual(median_of_three(10, 30, 20), 20)
+        self.assertEqual(median_of_three(25, 15, 35), 25)
+        self.assertEqual(median_of_three(900, 9999, -1050), 900)
+        self.assertEqual(median_of_three(193, 191, 192.5), 192.5)
+        self.assertEqual(median_of_three(99999, 0, -1000), 0)
 
-assert factorial(5) == 120
-assert factorial(0) == 1
-assert factorial(1) == 1
-assert factorial(6) == 720
-assert factorial(20) == 2432902008176640000
+    def test_factorial(self):
+        self.assertEqual(factorial(5), 120)
+        self.assertEqual(factorial(0), 1)
+        self.assertEqual(factorial(1), 1)
+        self.assertEqual(factorial(6), 720)
+        self.assertEqual(factorial(20), 2432902008176640000)
 
-assert is_palindrome("racecar") == True
-assert is_palindrome("hello") == False
-assert is_palindrome("madam") == True
-assert is_palindrome("python") == False
+    def test_is_palindrome(self):
+        self.assertTrue(is_palindrome("racecar"))
+        self.assertFalse(is_palindrome("hello"))
+        self.assertTrue(is_palindrome("madam"))
+        self.assertFalse(is_palindrome("python"))
 
-assert count_of_latin_vowels("hello world") == 3
-assert count_of_latin_vowels("aeiou") == 5
-assert count_of_latin_vowels("xyz") == 0
-assert count_of_latin_vowels("Python programming") == 4
-assert count_of_latin_vowels("Aeiou") == 5
+    def test_count_of_latin_vowels(self):
+        self.assertEqual(count_of_latin_vowels("hello world"), 3)
+        self.assertEqual(count_of_latin_vowels("aeiou"), 5)
+        self.assertEqual(count_of_latin_vowels("xyz"), 0)
+        self.assertEqual(count_of_latin_vowels("Python programming"), 4)
+        self.assertEqual(count_of_latin_vowels("Aeiou"), 5)
 
-assert longest_string(["apple", "banana", "cherry"]) == "banana"
-assert longest_string(["cat", "dog", "elephant"]) == "elephant"
-assert longest_string(["short", "longer", "longest"]) == "longest"
-assert longest_string(["a", "ab", "abc"]) == "abc"
-assert longest_string(["one", "two", "three", "four"]) == "three"
+    def test_longest_string(self):
+        self.assertEqual(longest_string(
+            ["apple", "banana", "cherry"]), "banana")
+        self.assertEqual(longest_string(
+            ["cat", "dog", "elephant"]), "elephant")
+        self.assertEqual(longest_string(
+            ["short", "longer", "longest"]), "longest")
+        self.assertEqual(longest_string(["a", "ab", "abc"]), "abc")
+        self.assertEqual(longest_string(
+            ["one", "two", "three", "four"]), "three")
 
-assert word_frequencies("hello world hello") == {'hello': 2, 'world': 1}
-assert word_frequencies("a b a c b a") == {'a': 3, 'b': 2, 'c': 1}
-assert word_frequencies("test test test") == {'test': 3}
-assert word_frequencies("") == {}
+    def test_word_frequencies(self):
+        self.assertEqual(
+            word_frequencies("hello world hello"), {'hello': 2, 'world': 1})
+        self.assertEqual(
+            word_frequencies("a b a c b a"),
+            {'a': 3, 'b': 2, 'c': 1})
+        self.assertEqual(word_frequencies("test test test"), {'test': 3})
+        self.assertEqual(word_frequencies(""), {})
+
+
+if __name__ == "__main__":
+    unittest.main()

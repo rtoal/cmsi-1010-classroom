@@ -38,7 +38,7 @@ class Person:
         if self.dad:
             self.dad.print_family_tree(f"  {indent}dad: ", level + 1)
 
-    def __repr__(self):
+    def __str__(self):
         info = f"{self.name} ({self.life_span()})"
         info += f", Mom: {self.mom.name if self.mom else 'Unknown'}"
         info += f", Dad: {self.dad.name if self.dad else 'Unknown'}"

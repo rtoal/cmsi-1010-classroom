@@ -246,7 +246,3 @@ class TestDataStructuresCardio(unittest.TestCase):
             word_frequencies(["not", "a", "string"])
         with self.assertRaises(TypeError):
             word_frequencies({"not": "a string"})
-
-
-if __name__ == "__main__":
-    unittest.main()

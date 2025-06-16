@@ -151,7 +151,3 @@ class TestFunctionsCardio(unittest.TestCase):
             {'a': 3, 'b': 2, 'c': 1})
         self.assertEqual(word_frequencies("test test test"), {'test': 3})
         self.assertEqual(word_frequencies(""), {})
-
-
-if __name__ == "__main__":
-    unittest.main()

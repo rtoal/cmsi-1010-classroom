@@ -3,9 +3,9 @@ Based on an original JavaScript implementation by Max Halford
 at https://maxhalford.github.io/blog/mondrian/)
 """
 
-import pygame
 import random
 import sys
+import pygame
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -13,6 +13,8 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mondrain")
 
 COLORS = [
+    # Most of the squares will be white, so it’s included many times.
+    # That way, the random.choice function will often pick white.
     (255, 255, 255),  # white
     (255, 255, 255),
     (255, 255, 255),

@@ -17,28 +17,21 @@ tree_spacing = 160
 stripe_start, stripe_length = 0, 100
 STRIPE_LEVEL = HEIGHT - 50  # y-coordinate of the stripes
 
-MAX_PLANE_SPEED = 1
+MAX_PLANE_SPEED = 10
 
 
 @dataclass
 class Plane:
     x: int
     y: int
-    width: int
-    height: int
     state: str = "flying"  # "flying", "descending", "ground"
     speed: int = 8
 
     def draw(self):
-        color = (128, 128, 128)
-        # pygame.draw.ellipse(
-        #     screen, color, (WIDTH//2-self.width, self.y, self.width, self.height))
-        x, y = WIDTH // 2 - self.width, self.y
         plane_relatives = [
-            (0, 0), (3, 2), (1, 7), (4, 7), (8, 2), (15, 2), (10, 6), (11, 6),
-            (24, 2), (32, 2), (35, -2), (24, -2), (11, -8), (10, -8), (15, -2),
-            (3, -2)
-        ]
+            (-16, 0), (-13, 2), (-15, 7), (-12, 7), (-8, 2), (-1, 2),
+            (-6, 6), (-5, 6), (8, 2), (16, 2), (19, -2), (8, -2),
+            (-5, -8), (-6, -8), (-1, -2), (-13, -2)]
         plane = [(WIDTH//2 + 4*x, self.y - 4*y) for x, y in plane_relatives]
         pygame.draw.polygon(screen, (128, 128, 128), plane)
 
@@ -58,7 +51,7 @@ class Plane:
                 self.state = "stopped"
 
 
-plane = Plane(0, y=50, width=100, height=30)
+plane = Plane(0, y=50)
 
 
 def draw_scene():
@@ -71,7 +64,6 @@ def draw_scene():
         pygame.draw.line(screen, (255, 255, 255), (x, HEIGHT - 50),
                          (x + stripe_length, HEIGHT - 50), 5)
         x += (stripe_length * 1.5)
-    # draw_trees()
     plane.draw()
     plane.move()
     stripe_start -= plane.speed
@@ -90,10 +82,6 @@ while True:
             if event.key == pygame.K_SPACE:
                 if plane.state == "flying":
                     plane.state = "descending"
-                elif plane.state == "descending":
-                    plane.state = "ground"
-                elif plane.state == "ground":
-                    plane.state = "stopped"
                 elif plane.state == "stopped":
                     plane.state = "flying"
                     plane.x = 0

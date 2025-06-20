@@ -3,6 +3,7 @@
 WORK IN PROGRESS
 """
 
+import math
 from dataclasses import dataclass
 import pygame
 
@@ -26,13 +27,18 @@ class Plane:
     y: int
     state: str = "flying"  # "flying", "descending", "ground"
     speed: int = MAX_PLANE_SPEED
+    rotation: int = 0  # rotation angle in radians
 
     def draw(self):
         plane_relatives = [
             (-16, 0), (-13, 2), (-15, 7), (-12, 7), (-8, 2), (-1, 2),
             (-6, 6), (-5, 6), (8, 2), (16, 2), (19, -2), (8, -2),
             (-5, -8), (-6, -8), (-1, -2), (-13, -2)]
-        plane = [(WIDTH//2 + 4*x, self.y - 4*y) for x, y in plane_relatives]
+        rotated = plane_relatives if self.rotation == 0 else [
+            (x * math.cos(self.rotation) - y * math.sin(self.rotation),
+             x * math.sin(self.rotation) + y * math.cos(self.rotation))
+            for x, y in plane_relatives]
+        plane = [(WIDTH//2 + 4*x, self.y - 4*y) for x, y in rotated]
         pygame.draw.polygon(screen, (128, 128, 128), plane)
 
     def move(self):
@@ -51,7 +57,7 @@ class Plane:
                 self.state = "stopped"
 
 
-plane = Plane(0, y=50)
+plane = Plane(0, y=50, rotation=1)
 
 
 def draw_scene():

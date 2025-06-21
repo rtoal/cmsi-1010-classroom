@@ -1,24 +1,30 @@
 """A animation of a plane landing, controlled by the user.
 
-WORK IN PROGRESS
+The plan begins in a flying state. The user then presses the down arrow key
+to start descending. When the plane is close to the ground, the user must
+press the up arrow key to raise the nose. After the plane touches the ground,
+then the user presses the down arrow key again to lower the nose. Then they
+must press the return key to start braking. The plane will come to a stop
+and the user can click to start over.
 """
 
 import math
 from dataclasses import dataclass
 import pygame
 
-pygame.init()
 WIDTH, HEIGHT = 1024, 600
-GROUND_LEVEL = HEIGHT - 100  # y-coordinate of the ground
+GRASS_COLOR = (0, 128, 0)
+GRASS_HEIGHT = 100
+GRASS_TOP = HEIGHT - GRASS_HEIGHT
+GRASS_RECTANGLE = (0, GRASS_TOP, WIDTH, GRASS_HEIGHT)
+GROUND_LEVEL = HEIGHT - (GRASS_HEIGHT // 2)
+TREE_SPACING = 173  # space between trees
+MAX_PLANE_SPEED = 23
+
+pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Plane Landing")
 clock = pygame.time.Clock()
-
-tree_spacing = 160
-stripe_start, stripe_length = 0, 100
-STRIPE_LEVEL = HEIGHT - 50  # y-coordinate of the stripes
-
-MAX_PLANE_SPEED = 20
 
 
 @dataclass
@@ -39,43 +45,43 @@ class Plane:
              x * math.sin(self.rotation) + y * math.cos(self.rotation))
             for x, y in plane_relatives]
         plane = [(WIDTH//2 + 4*x, self.y - 4*y) for x, y in rotated]
-        pygame.draw.polygon(screen, (128, 128, 128), plane)
+        pygame.draw.polygon(screen, (255, 255, 255), plane)
 
     def move(self):
         if self.state != "stopped":
-            self.x += self.speed % (tree_spacing * 20)
+            self.x += self.speed % TREE_SPACING
         if self.state == "descending":
             self.y += self.speed * 0.1
-            if self.y >= STRIPE_LEVEL:
+            if self.y >= GROUND_LEVEL:
                 self.state = "ground"
-                self.y = STRIPE_LEVEL
+                self.y = GROUND_LEVEL
         elif self.state == "ground":
-            self.y = STRIPE_LEVEL
+            self.y = GROUND_LEVEL
             self.speed -= 0.05
             if self.speed <= 0:
                 self.speed = 0
                 self.state = "stopped"
 
 
-plane = Plane(0, y=50, rotation=1)
+plane = Plane(0, y=50, rotation=0.1)
+
+
+def draw_tree(x, y):
+    pygame.draw.rect(screen, (139, 69, 19), (x - 5, y - 20, 10, 20))  # trunk
+    pygame.draw.polygon(screen, (0, 128, 0), [
+                        (x - 30, y - 20), (x + 30, y - 20), (x, y - 100)])  # leaves
 
 
 def draw_scene():
-    global stripe_start
     if plane.state != "stopped":
         screen.fill((0, 255, 255))  # clear screen
-        pygame.draw.rect(screen, (0, 128, 0), (0, HEIGHT - 100, WIDTH, 100))
-        pygame.draw.rect(screen, (0, 0, 0), (0, HEIGHT-70, WIDTH, 50))
-        x = stripe_start
+        pygame.draw.rect(screen, GRASS_COLOR, GRASS_RECTANGLE)
+        x = -plane.x
         while x < WIDTH:
-            pygame.draw.line(screen, (255, 255, 255), (x, HEIGHT - 50),
-                             (x + stripe_length, HEIGHT - 50), 5)
-            x += (stripe_length * 1.5)
+            draw_tree(x, GRASS_TOP)
+            x += TREE_SPACING
         plane.draw()
         plane.move()
-        stripe_start -= plane.speed
-        if stripe_start*1.5 < -stripe_length:
-            stripe_start += stripe_length*1.5
 
     clock.tick(60)  # limit to 60 FPS
     pygame.display.flip()

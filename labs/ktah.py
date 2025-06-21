@@ -8,11 +8,11 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("K'tah")
 clock = pygame.time.Clock()
 
+frozen = False
 UNFREEZE = pygame.USEREVENT + 1
-REMOVE_SCARECROW = pygame.USEREVENT + 2
 
 scarecrow = None
-frozen = False
+REMOVE_SCARECROW = pygame.USEREVENT + 2
 
 
 @dataclass
@@ -84,6 +84,8 @@ def draw_scene():
             zombie.move_towards(target)
 
     screen.fill((0, 100, 0))
+    if scarecrow is not None:
+        pygame.draw.circle(screen, (255, 200, 0), scarecrow, 20)
     player.draw()
     for zombie in zombies:
         zombie.draw()

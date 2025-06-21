@@ -9,7 +9,7 @@
 # how to write each class from the descriptions and the unit tests at
 # the bottom of the file. To run the tests, you can use the command
 #
-#     python3 -m unittest data_structures_cardio.py
+#     python3 -m unittest classes_cardio.py
 #
 # (or python depending on your system).
 #

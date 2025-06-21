@@ -1,12 +1,14 @@
 import math
 from dataclasses import dataclass
 import pygame
+import pygame.freetype
 
 pygame.init()
 WIDTH, HEIGHT = 1024, 768
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("K'tah")
 clock = pygame.time.Clock()
+font = pygame.freetype.SysFont('sans', 100)
 
 frozen = False
 UNFREEZE = pygame.USEREVENT + 1
@@ -75,6 +77,8 @@ zombies = [
 
 def draw_scene():
     if player.is_caught_by_any_of(zombies):
+        font.render_to(screen, (20, 20), "GAME OVER", (255, 0, 0))
+        pygame.display.flip()
         return
 
     player.move_towards(pygame.mouse.get_pos())

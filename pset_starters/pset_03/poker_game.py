@@ -24,4 +24,20 @@
 # for cards in cards.py. You will have to figure out the import
 # statement to use in this file to import the functions and classes
 # you need from that module.
+#
+# Here is an example run:
+#
+# Enter the number of players(2-10): 10
+# 9♦ 6♠ 5♥ 9♠ A♠ is a One Pair
+# 6♦ 7♠ 5♦ Q♠ 2♠ is a High Card
+# 2♥ 8♥ 4♥ 4♦ 3♣ is a One Pair
+# K♥ 3♥ 10♠ J♦ 10♥ is a One Pair
+# K♠ J♥ 4♣ 8♠ 7♦ is a High Card
+# 6♣ 6♥ A♣ A♦ 3♦ is a Two Pair
+# Q♣ A♥ J♠ K♦ 9♣ is a High Card
+# 9♥ Q♦ 8♣ 7♣ 7♥ is a One Pair
+# 5♣ 2♦ 10♦ K♣ 4♠ is a High Card
+# 2♣ 8♦ J♣ 10♣ 5♠ is a High Card
+#
+# Enter the number of players(2-10): bye
 # ----------------------------------------------------------------------

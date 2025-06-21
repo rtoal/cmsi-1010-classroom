@@ -6,11 +6,13 @@ pygame.init()
 WIDTH, HEIGHT = 1024, 768
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("K'tah")
+clock = pygame.time.Clock()
 
-FREEZE = pygame.USEREVENT + 1
-SCARECROW = pygame.USEREVENT + 2
+UNFREEZE = pygame.USEREVENT + 1
+REMOVE_SCARECROW = pygame.USEREVENT + 2
 
-scarecrow = None  # Placeholder for the scarecrow position
+scarecrow = None
+frozen = False
 
 
 @dataclass
@@ -28,7 +30,8 @@ class Agent:
         dx = target[0] - self.x
         dy = target[1] - self.y
         distance = math.hypot(dx, dy)
-        if distance > 0:
+        if distance > 3.0:
+            # Allow three pixels of leeway to avoid jittering
             self.x += (dx / distance) * self.speed
             self.y += (dy / distance) * self.speed
 
@@ -48,6 +51,12 @@ class Player(Agent):
     def teleport(self, pos):
         self.x, self.y = pos
 
+    def is_caught_by_any_of(self, zombies):
+        for zombie in zombies:
+            if self.is_collided_with(zombie):
+                return True
+        return False
+
 
 @dataclass
 class Zombie(Agent):
@@ -64,26 +73,8 @@ zombies = [
     Zombie(x=WIDTH-20, y=HEIGHT-20, speed=0.9)]
 
 
-def player_is_caught(player, zombies):
-    for zombie in zombies:
-        if player.is_collided_with(zombie):
-            return True
-    return False
-
-
-frozen = False
-
-
-def freeze_zombies():
-    global frozen
-    if frozen:
-        return
-    frozen = True
-    pygame.time.set_timer(FREEZE, 5000)
-
-
 def draw_scene():
-    if player_is_caught(player, zombies):
+    if player.is_caught_by_any_of(zombies):
         return
 
     player.move_towards(pygame.mouse.get_pos())
@@ -96,6 +87,7 @@ def draw_scene():
     player.draw()
     for zombie in zombies:
         zombie.draw()
+    clock.tick(60)
     pygame.display.flip()
 
 
@@ -104,18 +96,19 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             raise SystemExit
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             player.teleport(event.pos)
-        if event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_f:
-                freeze_zombies()
+                if not frozen:
+                    frozen = True
+                    pygame.time.set_timer(UNFREEZE, 5000, loops=1)
             elif event.key == pygame.K_s:
-                scarecrow = (player.x, player.y)
-                pygame.time.set_timer(SCARECROW, 5000)
-        if event.type == FREEZE:
+                if scarecrow is None:
+                    scarecrow = (player.x, player.y)
+                    pygame.time.set_timer(REMOVE_SCARECROW, 5000, loops=1)
+        elif event.type == UNFREEZE:
             frozen = False
-            pygame.time.set_timer(FREEZE, 0)
-        if event.type == SCARECROW:
+        elif event.type == REMOVE_SCARECROW:
             scarecrow = None
-            pygame.time.set_timer(SCARECROW, 0)
     draw_scene()

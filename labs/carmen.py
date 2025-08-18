@@ -1,27 +1,27 @@
 import random
+from haversine import haversine
 from geography import countries
 
 
 def random_country_name():
-    # Select a random country name from the keys in the dictionary we imported.
-    # We have to convert the keys to a list, because random.choice() only works
-    # on lists, and the keys of a dictionary are (surprisingly!) not a list in
-    # Python.
+    # Select a random country name from the key in the countries dictionary we imported.
+    # We have to convert the keys to a list, because random.choice() only works on lists,
+    # and the keys of a dictionary are (surprisingly!) not a list in Python.
     return random.choice(list(countries.keys()))
 
 
 def random_hint(country):
-    match random.choice(["capital", "region", "landmark0", "landmark1", "landmark2"]):
+    match random.choice(["capital", "region", "landmark", "distance"]):
         case "capital":
             hint = "whose capital is " + country["capital"]
         case "region":
             hint = "in " + country["region"]
-        case "landmark0":
-            hint = "where you can find " + country["landmarks"][0]
-        case "landmark1":
-            hint = "where you can find " + country["landmarks"][1]
-        case "landmark2":
-            hint = "where you can find " + country["landmarks"][2]
+        case "landmark":
+            hint = "where you can find " + random.choice(country["landmarks"])
+        case "distance":
+            los_angeles = (34.0522, -118.2437)
+            from_LA = haversine(los_angeles, country["coordinates"], unit="km")
+            hint = "approximately " + str(from_LA) + " km from Los Angeles"
     return "Carmen is in a country " + hint
 
 

@@ -44,49 +44,15 @@ def deal(number_of_hands, cards_per_hand):
 
 
 def poker_classification(hand):
-    if not isinstance(hand, set):
-        raise TypeError("The hand must be a set of Card objects")
-    if len(hand) != 5:
-        raise ValueError("The hand must contain exactly 5 cards")
-    if not all(isinstance(card, Card) for card in hand):
-        raise TypeError("All elements in the hand must be Card objects")
-
-    # Sort the hand by rank, so the set has to be converted to a list
-    hand = sorted(hand, key=lambda card: card.rank)
-
-    # Check for flush (all cards of the same suit)
-    is_flush = all(card.suit == hand[0].suit for card in hand)
-
-    # Check for straight (consecutive ranks, but handle Ace as both high and low)
-    ranks = [card.rank for card in hand]
-    is_broadway_straight = (ranks == [1, 10, 11, 12, 13])
-    is_lower_straight = all(
-        ranks[i] == ranks[i-1]+1 for i in range(1, len(ranks)))
-    is_straight = is_broadway_straight or is_lower_straight
-
-    # Count occurrences of each rank in descending order
-    rank_counts = {}
-    for card in hand:
-        rank_counts[card.rank] = rank_counts.get(card.rank, 0) + 1
-    counts = sorted(rank_counts.values(), reverse=True)
-
-    # Now we are ready
-    if is_flush and is_broadway_straight:
-        return "Royal Flush"
-    if is_flush and is_straight:
-        return "Straight Flush"
-    if counts == [4, 1]:
-        return "Four of a Kind"
-    if counts == [3, 2]:
-        return "Full House"
-    if is_flush:
-        return "Flush"
-    if is_straight:
-        return "Straight"
-    if counts == [3, 1, 1]:
-        return "Three of a Kind"
-    if counts == [2, 2, 1]:
-        return "Two Pair"
-    if counts == [2, 1, 1, 1]:
-        return "One Pair"
-    return "High Card"
+    # Returns a string describing the poker hand. First, validate the input
+    # to make sure it is a set of 5 cards, and raise the appropriate error
+    # (TypeError or ValueError) if necessary.
+    #
+    # Then return one of the following strings:
+    # "High Card", "One Pair", "Two Pair", "Three of a Kind",
+    # "Straight", "Flush", "Full House", "Four of a Kind",
+    # "Straight Flush", "Royal Flush"
+    #
+    # Make sure to remove this comment and the pass statement below
+    # before submitting.
+    pass

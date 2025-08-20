@@ -20,8 +20,6 @@
 # comments, but please remove all the comments that are here now.
 # ----------------------------------------------------------------------
 
-import unittest
-
 
 def third_element(t):
     """
